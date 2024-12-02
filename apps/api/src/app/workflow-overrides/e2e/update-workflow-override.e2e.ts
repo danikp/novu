@@ -70,9 +70,8 @@ describe('Update Workflow Override - /workflow-overrides/workflows/:workflowId/t
         .put(`/v1/workflow-overrides/workflows/${workflow._id}/tenants/${invalidTenantIdentifier}`)
         .send(updatePayload)
     ).body;
-
     expect(updatedOverrides.statusCode).to.equal(400);
-    expect(updatedOverrides.message[0]).to.equal('_tenantId must be a mongodb id');
+    expect(updatedOverrides.cause._tenantId.messages[0]).to.equal('_tenantId must be a mongodb id');
   });
 
   it('should fail update workflow override with invalid workflow id', async function () {
@@ -98,8 +97,8 @@ describe('Update Workflow Override - /workflow-overrides/workflows/:workflowId/t
         .put(`/v1/workflow-overrides/workflows/${invalidWorkflowId}/tenants/${tenant.identifier}`)
         .send(updatePayload)
     ).body;
-
     expect(updatedOverrides.statusCode).to.equal(400);
+    expect(updatedOverrides.cause._tenantId.messages[0]).to.equal(`_tenantId must be a mongodb id`);
     expect(updatedOverrides.message[0]).to.equal(`_tenantId must be a mongodb id`);
   });
 
@@ -133,9 +132,8 @@ describe('Update Workflow Override - /workflow-overrides/workflows/:workflowId/t
         .put(`/v1/workflow-overrides/workflows/${workflow._id}/tenants/${tenant.identifier}`)
         .send(updatePayload)
     ).body;
-
     expect(updatedOverrides.statusCode).to.equal(400);
-    expect(updatedOverrides.message[0]).to.equal(`_tenantId must be a mongodb id`);
+    expect(updatedOverrides.cause._tenantId.messages[0]).to.equal(`_tenantId must be a mongodb id`);
   });
 
   async function initializeOverrides() {
