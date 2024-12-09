@@ -561,8 +561,9 @@ export class SubscribersController {
   @ApiOperation({
     summary: 'Get in-app notification feed for a particular subscriber',
   })
-  @ApiOkPaginatedResponse(FeedResponseDto)
+  @ApiResponse(FeedResponseDto)
   @SdkGroupName('Subscribers.Notifications')
+  @SdkMethodName('feed')
   async getNotificationsFeed(
     @UserSession() user: UserSessionData,
     @Param('subscriberId') subscriberId: string,
